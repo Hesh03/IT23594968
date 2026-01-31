@@ -2,47 +2,67 @@ import { test, expect } from '@playwright/test';
 
 const BASE_URL = 'https://www.swifttranslator.com/';
 
-const positiveCases = [
-  { id: 'Pos_Fun_0001', input: 'mama kaempas ekata yana gaman inne', expected: 'මම කැම්පස් එකට යන ගමන් ඉන්නේ' },
-  { id: 'Pos_Fun_0002', input: 'mata hari ma badagini', expected: 'මට හරි ම බඩගිනි' },
-  { id: 'Pos_Fun_0003', input: 'api canteen ekata yamu', expected: 'අපි canteen එකට යමු' },
-  { id: 'Pos_Fun_0004', input: 'oya dhaen free dha?', expected: 'ඔය දැන් free ද?' },
-  { id: 'Pos_Fun_0005', input: 'poddak stop karanna puluvandha?', expected: 'පොඩ්ඩක් stop කරන්න පුලුවන්ද?' },
-  { id: 'Pos_Fun_0006', input: 'poddak enna baeridha ithin', expected: 'පොඩ්ඩක් එන්න බැරිද ඉතින්' },
-  { id: 'Pos_Fun_0007', input: 'api heta film ekak balamu', expected: 'අපි හෙට film එකක් බලමු' },
-  { id: 'Pos_Fun_0008', input: 'mata eka karanna baehae', expected: 'මට එක කරන්න බැහැ' },
-  { id: 'Pos_Fun_0009', input: 'samaavenna mama godak parakku unaa', expected: 'සමාවෙන්න මම ගොඩක් පරක්කු උනා' },
-  { id: 'Pos_Fun_0010', input: 'lecture eka hari ma boring', expected: 'lecture එක හරි ම boring' },
-  { id: 'Pos_Fun_0011', input: 'oya kohe idhan dha enne?', expected: 'ඔය කොහෙ ඉදන් ද එන්නෙ?' },
-  { id: 'Pos_Fun_0012', input: 'api 4.30 ta library eka laga hamba vemu', expected: 'අපි 4.30 ට library එක ලග හම්බ වෙමු' },
-  { id: 'Pos_Fun_0013', input: 'oya enne kavath dha?', expected: 'ඔය එන්නෙ කවත් ද?' },
-  { id: 'Pos_Fun_0014', input: 'shaa hari ma lassanayi meka', expected: 'ශා හරි ම ලස්සනයි මෙක' },
-  { id: 'Pos_Fun_0015', input: 'Mama dhaen liyanna gannavaa', expected: 'මම දැන් ලියන්න ගන්නවා' },
-  { id: 'Pos_Fun_0016', input: 'iiyee lecture eka miss unaa', expected: 'ඊයේ lecture එක miss උනා' },
-  { id: 'Pos_Fun_0017', input: 'mata poddak mathak karala dhenna', expected: 'මට පොඩ්ඩක් මතක් කරල දෙන්න' },
-  { id: 'Pos_Fun_0018', input: 'magee athee rupiyal 500yi thiyenne', expected: 'මගේ අතේ රුපියල් 500යි තියෙන්නෙ' },
-  { id: 'Pos_Fun_0019', input: 'adha hari ma mahansi', expected: 'අද හරි ම මහන්සි' },
-  { id: 'Pos_Fun_0020', input: 'meeting eka ivara unaama call karannam', expected: 'meeting එක ඉවර උනාම call කරන්නම්' },
-  { id: 'Pos_Fun_0021', input: 'api weekend eke anivaaren gedhara yamu', expected: 'අපි weekend eke අනිවාරෙන් ගෙදර යමු' },
-  { id: 'Pos_Fun_0022', input: 'mata murukku 250g oonee', expected: 'මට මුරුක්කු 250g ඕනේ' },
-  { id: 'Pos_Fun_0023', input: 'oyaa eeka kalee kohomadha?', expected: 'ඔයා ඒක කලේ කොහොමද?' },
-  { id: 'Pos_Fun_0024', input: 'suba dhavasak oyaata!', expected: 'සුබ දවසක් ඔයාට!' }
+const positiveTestCases = [
+  { id: 'TC_01', input: 'exam eka kavadhdha thiyenne?', expected: 'exam එක කවද්ද තියෙන්නෙ?' },
+  { id: 'TC_02', input: 'mama exam eka sadhahaa vaeda karanavaa', expected: 'මම exam එක සදහා වැඩ කරනවා' },
+  { id: 'TC_03', input: 'exam hall ekata kalin enna', expected: 'exam hall එකට කලින් එන්න' },
+  { id: 'TC_04', input: 'mata exam eka liyanna bae', expected: 'මට exam එක ලියන්න බැ' },
+  { id: 'TC_05', input: 'api exam results balamu passe', expected: 'අපි exam results බලමු පස්සෙ' },
+  { id: 'TC_06', input: 'mata exam eka nisaa baya hithenavaa', expected: 'මට exam එක නිසා බය හිතෙනවා' },
+  { id: 'TC_07', input: 'exam timetable eka LMS ekee dhaala thiyenavaa.', expected: 'exam timetable එක LMS එකේ දාල තියෙනවා.' },
+  { id: 'TC_08', input: 'exam notes tika evanna puLuvandha?', expected: 'exam notes ටික එවන්න පුළුවන්ද?' },
+  { id: 'TC_09', input: 'mama last exam ekata attend kaLaa.', expected: 'මම last exam එකට attend කළා.' },
+  { id: 'TC_10', input: 'api exam eka sadhahaa group study karamu.', expected: 'අපි exam එක සදහා group study කරමු.' },
+  { id: 'TC_11', input: 'api trip ekak plan karanavaa.', expected: 'අපි trip එකක් plan කරනවා.' },
+  { id: 'TC_12', input: 'api Kandy yanna hadhannee.', expected: 'අපි Kandy යන්න හදන්නේ.' },
+  { id: 'TC_13', input: 'trip ekata bags pack karanna onee.', expected: 'trip එකට bags pack කරන්න ඔනේ.' },
+  { id: 'TC_14', input: 'api hotel ekak online book kaLaa.', expected: 'අපි hotel එකක් online book කළා.' },
+  { id: 'TC_15', input: 'traffic nisaa trip eka late vunaa', expected: 'traffic නිසා trip එක late වුනා' },
+  { id: 'TC_16', input: 'api trip ekata kavadhdha yanne?', expected: 'අපි trip එකට කවද්ද යන්නෙ?' },
+  { id: 'TC_17', input: 'api yaluvo okkoma ekka yamu.', expected: 'අපි යලුවො ඔක්කොම එක්ක යමු.' },
+  { id: 'TC_18', input: 'trip photos WhatsApp karanna.', expected: 'trip photos WhatsApp කරන්න.' },
+  { id: 'TC_19', input: 'trip eka ivara vunaata passe api gedhara enavaa.', expected: 'trip එක ඉවර වුනාට පස්සෙ අපි ගෙදර එනවා.' },
+  { id: 'TC_20', input: 'trip eka hari lassanayi.', expected: 'trip එක හරි ලස්සනයි.' },
+  { id: 'TC_21', input: 'mama sports miit eka sadhahaa select vunaa.', expected: 'මම sports මීට් එක සදහා select වුනා.' },
+  { id: 'TC_22', input: 'api sports practice kalin patan gannavaa.', expected: 'අපි sports practice කලින් පටන් ගන්නවා.' },
+  { id: 'TC_23', input: 'sports miit ekeedhi hariyata karanna.', expected: 'sports මීට් එකේදි හරියට කරන්න.' },
+  { id: 'TC_24', input: 'api sports miit eka dhinuvaa.', expected: 'අපි sports මීට් එක දිනුවා.' },
 ];
 
 test.describe('Positive Functional Test Cases', () => {
-  positiveCases.forEach(tc => {
-    test(tc.id, async ({ page }) => {
+  // REMOVED 'serial' mode. 
+  // This ensures that if TC_01 fails, TC_02 will still try to run.
+  
+  positiveTestCases.forEach(tc => {
+    test(`${tc.id}: ${tc.input}`, async ({ page }) => {
+      // 1. Navigate
       await page.goto(BASE_URL);
-      const inputArea = page.locator('textarea'); 
+
+      const inputArea = page.locator('textarea');
       const outputDiv = page.locator('div.bg-slate-50.whitespace-pre-wrap');
 
-      await inputArea.fill(tc.input);
-      
-      // Dynamic wait: Wait for the div to have content before checking value
-      await expect(outputDiv).not.toBeEmpty({ timeout: 10000 }); 
+      // 2. Type simulation
+      // Using a small delay to simulate human typing
+      await inputArea.pressSequentially(tc.input, { delay: 50 });
 
-      const actualOutput = (await outputDiv.textContent() || '').trim();
-      expect(actualOutput).toBe(tc.expected);
+      // 3. FORCE TRIGGER (Crucial Step)
+      // We type a Space and then Backspace. 
+      // This forces the React/JS engine to detect an "Input Event" and start the API call.
+      await inputArea.press('Space');
+      await page.waitForTimeout(200); // tiny pause
+      await inputArea.press('Backspace');
+
+      // 4. Manual Event Dispatch (Backup Trigger)
+      // If the space trick doesn't work, this forces the browser to say "Hey, input changed!"
+      await inputArea.dispatchEvent('input');
+
+      // 5. Smart Wait
+      // Wait for the output to NOT be empty before checking the text.
+      // This solves the timing issue where it checked too early.
+      await expect(outputDiv).not.toBeEmpty({ timeout: 15000 });
+
+      // 6. Final Assertion
+      await expect(outputDiv).toHaveText(tc.expected);
     });
   });
 });
